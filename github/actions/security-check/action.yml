@@ -1,0 +1,16 @@
+name: Security Log Analyser Check
+description: Build and run the security log analyser tests inside Docker
+inputs:
+  image-tag:
+    description: Local Docker image tag
+    required: false
+    default: security-log-analyser:ci
+runs:
+  using: composite
+  steps:
+    - name: Build Docker image
+      shell: bash
+      run: docker build --tag "${{ inputs.image-tag }}" .
+    - name: Execute tests and analyser in Docker
+      shell: bash
+      run: docker run --rm "${{ inputs.image-tag }}"
